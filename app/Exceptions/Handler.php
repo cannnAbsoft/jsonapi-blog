@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use LaravelJsonApi\Core\Exceptions\JsonApiException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -23,7 +22,7 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
-        JsonApiException::class,
+        \LaravelJsonApi\Core\Exceptions\JsonApiException::class,
     ];
 
     /**
@@ -45,7 +44,10 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            \LaravelJsonApi\Exceptions\ExceptionParser::make()->renderable();
+            //
         });
+        $this->renderable(
+            \LaravelJsonApi\Exceptions\ExceptionParser::make()->renderable()
+            );
     }
 }
